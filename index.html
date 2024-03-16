@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title> TO DO List</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+    }
+    h1 {
+        text-align: center;
+    }
+    form {
+        margin-bottom: 20px;
+    }
+    label {
+        font-weight: bold;
+    }
+    input[type="text"], select, input[type="date"] {
+        width: 100%;
+        padding: 8px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+    button {
+        width: 100%;
+        padding: 10px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #45a049;
+    }
+    .task-list {
+        list-style-type: none;
+        padding: 0;
+    }
+    .task-item {
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        background-color: #fff;
+        padding: 10px;
+    }
+    .completed {
+        text-decoration: line-through;
+        color: #aaa;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1> TO DO List</h1>
+    <form id="taskForm">
+        <label for="category">Category:</label>
+        <input type="text" id="category" name="category" required>
+        <label for="task">Task:</label>
+        <input type="text" id="task" name="task" required>
+        <label for="deadline">Deadline:</label>
+        <input type="date" id="deadline" name="deadline" required>
+        <label for="priority">Priority:</label>
+        <select id="priority" name="priority">
+            <option value="High">High</option>
+            <option value="Medium">Medium</option>
+            <option value="Low">Low</option>
+        </select>
+        <label for="labels">Labels:</label>
+        <input type="text" id="labels" name="labels">
+        <button type="submit">Add Task</button>
+    </form>
+    <h2>Tasks</h2>
+    <div id="tasks"></div>
+</div>
+
+<script>
+    const taskForm = document.getElementById('taskForm');
+    const tasksDiv = document.getElementById('tasks');
+
+    taskForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const category = document.getElementById('category').value;
+        const task = document.getElementById('task').value;
+        const deadline = document.getElementById('deadline').value;
+        const priority = document.getElementById('priority').value;
+        const labels = document.getElementById('labels').value;
+
+        const taskItem = document.createElement('div');
+        taskItem.classList.add('task-item');
+        taskItem.innerHTML = `
+            <p><strong>Category:</strong> ${category}</p>
+            <p><strong>Task:</strong> ${task}</p>
+            <p><strong>Deadline:</strong> ${deadline}</p>
+            <p><strong>Priority:</strong> ${priority}</p>
+            <p><strong>Labels:</strong> ${labels}</p>
+            <button onclick="completeTask(this)">Mark as Complete</button>
+        `;
+
+        tasksDiv.appendChild(taskItem);
+        taskForm.reset();
+    });
+
+    function completeTask(btn) {
+        const taskItem = btn.parentElement;
+        taskItem.classList.toggle('completed');
+        btn.textContent = btn.textContent === 'Mark as Complete' ? 'Undo Complete' : 'Mark as Complete';
+    }
+</script>
+</body>
+</html>
